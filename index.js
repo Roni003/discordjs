@@ -21,13 +21,12 @@ const client = new Client({
   ],
   presence: {
     activities: [{
-      name: "Looking for your father",
+      name: "Testing",
       type: 0
     }],
     status: 'dnd'
   }
 });
-
 // Host the bot:
 require('http').createServer((req, res) => res.end('Ready.')).listen(3000);
 

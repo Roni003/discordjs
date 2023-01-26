@@ -78,7 +78,7 @@ module.exports = (client, config) => {
         });
 
       } else {
-        console.log(`[HANDLER - MESSAGE] Couldn't load the file ${file}, missing module name value or type isn't 2.`.red)
+        console.log(`[HANDLER - MESSAGE] Couldn't load the file ${file}, missing module name value or type isn't 3.`.red)
         continue;
       };
     };
