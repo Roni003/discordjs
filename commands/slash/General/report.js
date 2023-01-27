@@ -94,12 +94,12 @@ module.exports = {
                 })
             }
 
+            let counter = 0;
             let tokens = list.tokens ?? [];
             const proxies = list.proxies ?? [];
 
             console.log(tokens)
             //tokens = tokens.filter((token) => ((Date.now()/1000) - (token.last_token)) < 86400)
-            console.log(tokens)
 
             reportingInProgress = true;
             await interaction.reply({
@@ -128,7 +128,8 @@ module.exports = {
 
                     await tmp.awaitOnline();
                     await sleep(1000);
-                    await tmp.sendChatMessage("/f " + a); //Add RNG with an array of different report types.
+                    counter++;
+                    await tmp.sendChatMessage("/p " + a); //Add RNG with an array of different report types.
                     await sleep(2000); //Add rng with different length times ofr reporting
                     await tmp.stop();
 
@@ -150,7 +151,7 @@ module.exports = {
                 embeds: [
                     new EmbedBuilder()
                         .setTitle(`Reporting ${a}`)
-                        .setDescription("Reporting completed!")
+                        .setDescription("Reporting completed, reported user with " + counter + " accounts")
                         .setColor('Green')
                         .setTimestamp()
                         .setFooter({ text: 'Literally robbed Omi\'s code', iconURL: 'https://i.imgur.com/R8lsYLv.png' })
