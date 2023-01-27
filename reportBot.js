@@ -50,7 +50,7 @@ class Bot extends EventEmitter {
             host: "stuck.hypixel.net",
             port: 25565,
             username: this.config.username,
-            auth: 'mojang',
+            auth: 'microsoft',
             version: '1.8.9',
             session: {
                 //accessToken: this.config.token,

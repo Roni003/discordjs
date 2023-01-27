@@ -111,8 +111,10 @@ module.exports = {
             }
             ];
 
-            //console.log(tokens)
-            tokens = tokens.filter((token) => ((Date.now()/1000) - (token.last_token)) < 86400)
+            console.log(tokens)
+            //tokens = tokens.filter((token) => ((Date.now()/1000) - (token.last_token)) < 86400)
+            console.log(tokens)
+
             reportingInProgress = true;
             await interaction.reply({
                 embeds: [
@@ -125,8 +127,9 @@ module.exports = {
                 ],
             });
             try {
+                //console.log(tokens.length + " , " + proxies.length)
                 for (let i = 0; i < tokens.length && i < proxies.length; i++) {
-
+                    console.log("enter loop")
                     const tmp = new Bot({
                         proxyHost: proxies[i].ip,
                         proxyPort: proxies[i].port,
@@ -137,21 +140,10 @@ module.exports = {
                         //token: tokens[i].access_token,
                     })
 
-                    /* const tmp = new Bot({
-                        proxyHost: "104.238.20.15",
-                        proxyPort: "5637",
-                        proxyUser: "tpxnylxr",
-                        proxyPassword: "mdy9vt8i48st",
-                        uuid: "e661452e-27d9-4732-ac4a-c38d1ed6f721",
-                        username: tokens[i].name,
-                        token: tokens[i].access_token,
-                    }) */
-
                     await tmp.awaitOnline();
                     await sleep(1000);
-                    console.log("Sent message")
-                    await tmp.sendChatMessage("/f " + a);
-                    await sleep(2000);
+                    await tmp.sendChatMessage("/f " + a); //Add RNG with an array of different report types.
+                    await sleep(2000); //Add rng with different length times ofr reporting
                     await tmp.stop();
 
                     await interaction.editReply({
