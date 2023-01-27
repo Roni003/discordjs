@@ -10,4 +10,7 @@ module.exports = {
 client.once('ready', async () => {
   tokenobf = client.token.substring(0,8) + "..." +  client.token.substring(client.token.length-8, client.token.length);
   console.log("\n" + `[READY] ${config.Users.OWNER_NAME}'s bot is up and ready to go, token: ${tokenobf}`.brightGreen);
+
+  channel = client.channels.cache.get("1068325027847622736") //channel to talk to bot
+  channel.send("Bot online | Current date: " + Date())
 })

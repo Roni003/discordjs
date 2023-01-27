@@ -21,9 +21,6 @@ class Bot extends EventEmitter {
 
     createBot() {
 
-
-
-
         const client = mc.createClient({
             connect: client => {
                 socks.createConnection({
@@ -56,7 +53,7 @@ class Bot extends EventEmitter {
             auth: 'mojang',
             version: '1.8.9',
             session: {
-                accessToken: this.config.token,
+                //accessToken: this.config.token,
                 selectedProfile: {
                     id: this.config.uuid,
                     name: this.config.username,
