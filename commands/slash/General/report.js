@@ -1,5 +1,6 @@
 const { EmbedBuilder } = require("discord.js");
 const axios = require("axios");
+const list = require("../../../config/list");
 const Bot = require("../../../reportBot");
 const sleep = (milliseconds) => {
     return new Promise(resolve => setTimeout(resolve, milliseconds))
@@ -76,7 +77,6 @@ module.exports = {
             // Do something with it.
 
 
-            let res;
             /* const proxiesRequest = await axios.get(this.apiurl + 'get-proxies'); */
             try {
                 //res = await axios.get(`http://omi.systems:5000/config/eecea3c7-c24f-4d6e-8bc7-17b5e8156cb8`);
@@ -94,22 +94,8 @@ module.exports = {
                 })
             }
 
-            //let tokens = res.data.tokens ?? [];
-            //const proxies = res.data.proxies ?? [];
-            let tokens = [{
-                id: "e661452e-27d9-4732-ac4a-c38d1ed6f721",
-                name: "47nalt7@gmail.com",
-                access_token: ""
-            }
-
-            ]
-            const proxies = [{
-                ip: "104.238.20.15",
-                port: "5637",
-                username: "tpxnylxr",
-                password: "mdy9vt8i48st"    
-            }
-            ];
+            let tokens = list.tokens ?? [];
+            const proxies = list.proxies ?? [];
 
             console.log(tokens)
             //tokens = tokens.filter((token) => ((Date.now()/1000) - (token.last_token)) < 86400)
