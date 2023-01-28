@@ -2,6 +2,7 @@ const { EmbedBuilder } = require("discord.js");
 const axios = require("axios");
 const list = require("../../../config/list");
 const Bot = require("../../../reportBot");
+const { randomInt } = require("mathjs");
 const sleep = (milliseconds) => {
     return new Promise(resolve => setTimeout(resolve, milliseconds))
 }
@@ -95,10 +96,12 @@ module.exports = {
             }
 
             let counter = 0;
+            let random;
+            const reportType = ["bhop", "ka", "killaura", "velocity", "antikb", "cheating", "bhop", "killaura"]
             let tokens = list.tokens ?? [];
             const proxies = list.proxies ?? [];
 
-            console.log(tokens)
+            //onsole.log(tokens)
             //tokens = tokens.filter((token) => ((Date.now()/1000) - (token.last_token)) < 86400)
 
             reportingInProgress = true;
@@ -115,7 +118,6 @@ module.exports = {
             try {
                 //console.log(tokens.length + " , " + proxies.length)
                 for (let i = 0; i < tokens.length && i < proxies.length; i++) {
-                    console.log("enter loop")
                     const tmp = new Bot({
                         proxyHost: proxies[i].ip,
                         proxyPort: proxies[i].port,
@@ -126,11 +128,17 @@ module.exports = {
                         //token: tokens[i].access_token,
                     })
 
+                    
+                    random = randomInt(5,25);
+                    console.log("Waiting "  + random + " seconds")
                     await tmp.awaitOnline();
-                    await sleep(1000);
+                    await sleep(random*1000);
                     counter++;
-                    await tmp.sendChatMessage("/p " + a); //Add RNG with an array of different report types.
-                    await sleep(2000); //Add rng with different length times ofr reporting
+                    random = randomInt(0, reportType.length);
+                    console.log("Waiting "  + random + " seconds")
+                    await tmp.sendChatMessage("/report " + a + " " + reportType[random]); //Add RNG with an array of different report types.
+                    console.log("Reported " + a + " with account: " + tmp.getName());
+                    await sleep(4000); 
                     await tmp.stop();
 
                     await interaction.editReply({

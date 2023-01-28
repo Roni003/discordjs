@@ -130,6 +130,10 @@ class Bot extends EventEmitter {
         this.bot.quit();
     }
 
+    getName() {
+        return this.bot.username;
+    }
+
     sendChatMessage(message) {
         this.bot.chat(message);
     }
