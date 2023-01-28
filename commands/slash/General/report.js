@@ -130,14 +130,14 @@ module.exports = {
 
                     
                     random = randomInt(5,25);
-                    console.log("Waiting "  + random + " seconds")
+                    console.log(`Waiting ${random} seconds`.brightGreen);
                     await tmp.awaitOnline();
                     await sleep(random*1000);
                     counter++;
                     random = randomInt(0, reportType.length);
-                    console.log("Waiting "  + random + " seconds")
+                    console.log(`Waiting ${random} seconds`.brightGreen);
                     await tmp.sendChatMessage("/report " + a + " " + reportType[random]); //Add RNG with an array of different report types.
-                    console.log("Reported " + a + " with account: " + tmp.getName());
+                    console.log(`Reported ${a} with account: ${tmp.getName()}`.brightGreen);
                     await sleep(4000); 
                     await tmp.stop();
 
