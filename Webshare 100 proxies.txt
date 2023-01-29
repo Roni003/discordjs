@@ -1,9 +1,8 @@
 104.238.20.15:5637:tpxnylxr:mdy9vt8i48st
 193.27.19.160:7246:tpxnylxr:mdy9vt8i48st
 104.227.76.3:6100:tpxnylxr:mdy9vt8i48st
-107.175.119.40:6568:tpxnylxr:mdy9vt8i48st
-
 104.232.211.119:5732:tpxnylxr:mdy9vt8i48st
+
 198.23.239.141:6547:tpxnylxr:mdy9vt8i48st
 45.128.77.136:6422:tpxnylxr:mdy9vt8i48st
 161.123.33.251:6274:tpxnylxr:mdy9vt8i48st

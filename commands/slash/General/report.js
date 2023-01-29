@@ -142,7 +142,7 @@ module.exports = {
 
                     random = randomInt(0, reportType.length);
                     console.log(`Reporting with type ${reportType[random]}`.brightGreen);
-                    await tmp.sendChatMessage("/msg " + a + " " + reportType[random]); //Reports user
+                    await tmp.sendChatMessage("/report " + a + " " + reportType[random]); //Reports user
                     counter++;
                     console.log(`Reported ${a} with account: ${tmp.getName()}`.brightGreen);
                     await sleep(4000); 
