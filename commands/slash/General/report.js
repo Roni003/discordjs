@@ -97,9 +97,11 @@ module.exports = {
 
             let counter = 0;
             let random;
+            let names;
             const reportType = ["bhop", "ka", "killaura", "velocity", "antikb", "cheating", "bhop", "killaura"]
             let tokens = list.tokens ?? [];
             const proxies = list.proxies ?? [];
+            const accsnames = [];
 
             //onsole.log(tokens)
             //tokens = tokens.filter((token) => ((Date.now()/1000) - (token.last_token)) < 86400)
@@ -130,13 +132,18 @@ module.exports = {
 
                     
                     random = randomInt(5,25);
+
                     console.log(`Waiting ${random} seconds`.brightGreen);
                     await tmp.awaitOnline();
+                    await sleep(6000);
+                    await tmp.sendChatMessage("/play pit");
                     await sleep(random*1000);
-                    counter++;
+                    accsnames.push(tmp.getName());
+
                     random = randomInt(0, reportType.length);
-                    console.log(`Waiting ${random} seconds`.brightGreen);
-                    await tmp.sendChatMessage("/report " + a + " " + reportType[random]); //Add RNG with an array of different report types.
+                    console.log(`Reporting with type ${reportType[random]}`.brightGreen);
+                    await tmp.sendChatMessage("/msg " + a + " " + reportType[random]); //Reports user
+                    counter++;
                     console.log(`Reported ${a} with account: ${tmp.getName()}`.brightGreen);
                     await sleep(4000); 
                     await tmp.stop();
@@ -145,7 +152,7 @@ module.exports = {
                         embeds: [
                             new EmbedBuilder()
                                 .setTitle(`Rerporting ${a}`)
-                                .setDescription("Reported " + (parseInt(i)+1) + "/" + tokens.length + " times.")
+                                .setDescription("Reported " + (parseInt(i)+1) + "/" + tokens.length + " times")
                                 .setColor('Blue')
                                 .setTimestamp()
                                 .setFooter({ text: 'Literally robbed Omi\'s code', iconURL: 'https://i.imgur.com/R8lsYLv.png' })
@@ -154,12 +161,13 @@ module.exports = {
                 }
             } catch (e) { console.log("ERROR") }
 
+            names = JSON.stringify(accsnames);
             reportingInProgress = false;
             return interaction.editReply({
                 embeds: [
                     new EmbedBuilder()
                         .setTitle(`Reporting ${a}`)
-                        .setDescription("Reporting completed, reported user with " + counter + " accounts")
+                        .setDescription("Reporting completed, reported user with " + counter + " accounts | Used accounts " + names)
                         .setColor('Green')
                         .setTimestamp()
                         .setFooter({ text: 'Literally robbed Omi\'s code', iconURL: 'https://i.imgur.com/R8lsYLv.png' })
