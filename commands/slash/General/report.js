@@ -98,7 +98,7 @@ module.exports = {
             let counter = 0;
             let random;
             let names;
-            const reportType = ["bhop", "ka", "killaura", "velocity", "antikb", "cheating", "bhop", "killaura"]
+            const reportType = ["bhop", "boo", "ka", "killaura", "velocity", "antikb", "boo", "cheating", "bhop", "killaura"]
             let tokens = list.tokens ?? [];
             const proxies = list.proxies ?? [];
             const accsnames = [];
@@ -160,9 +160,11 @@ module.exports = {
                     })
                 }
             } catch (e) { console.log("ERROR") }
-
+n
             names = JSON.stringify(accsnames);
             reportingInProgress = false;
+            console.log(`Finished Reporting`.red);
+
             return interaction.editReply({
                 embeds: [
                     new EmbedBuilder()
