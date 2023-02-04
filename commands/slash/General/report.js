@@ -160,7 +160,7 @@ module.exports = {
                     })
                 }
             } catch (e) { console.log("ERROR") }
-n
+            n
             names = JSON.stringify(accsnames);
             reportingInProgress = false;
             console.log(`Finished Reporting`.red);
