@@ -6,6 +6,7 @@ const { randomInt } = require("mathjs");
 const sleep = (milliseconds) => {
     return new Promise(resolve => setTimeout(resolve, milliseconds))
 }
+
 let reportingInProgress = false;
 module.exports = {
     name: "report",
@@ -100,11 +101,12 @@ module.exports = {
             let names;
             const reportType = ["bhop", "boo", "ka", "killaura", "velocity", "antikb", "boo", "cheating", "bhop", "killaura"]
             let tokens = list.tokens ?? [];
-            const proxies = list.proxies ?? [];
             const accsnames = [];
-
-            //onsole.log(tokens)
+            const url = "https://proxy.webshare.io/api/v2/proxy/list/?mode=direct&page=1&page_size=25";
+            const param = {headers:{"Authorization": "Token 8b7zz7w8t544v8rh2ls8a9whn0qsulpac1mjhp5q"}}; //Webshare token
+            const proxyList = (await axios.get(url, param)).data.results;
             //tokens = tokens.filter((token) => ((Date.now()/1000) - (token.last_token)) < 86400)
+            //console.log(proxyList)
 
             reportingInProgress = true;
             await interaction.reply({
@@ -119,19 +121,23 @@ module.exports = {
             });
             try {
                 //console.log(tokens.length + " , " + proxies.length)
-                for (let i = 0; i < tokens.length && i < proxies.length; i++) {
+                for (let i = 0; i < tokens.length && i < proxyList.length; i++) {
                     const tmp = new Bot({
-                        proxyHost: proxies[i].ip,
-                        proxyPort: proxies[i].port,
-                        proxyUser: proxies[i].username,
-                        proxyPassword: proxies[i].password,
+                        proxyHost: proxyList[i].proxy_address,
+                        proxyPort: proxyList[i].port,
+                        proxyUser: proxyList[i].username,
+                        proxyPassword: proxyList[i].password,
                         uuid: tokens[i].id,
                         username: tokens[i].name,
                         //token: tokens[i].access_token,
                     })
 
+                    console.log(i)
+                    console.log(proxyList[i].proxy_address)
+                    console.log(proxyList[i].port)
+                    console.log(`Connecting with proxy ${i+1}: ${proxyList[i].proxy_address}:${proxyList[i].port}`.yellow)
                     
-                    random = randomInt(5,25);
+                    random = randomInt(5,50);
 
                     console.log(`Waiting ${random} seconds`.brightGreen);
                     await tmp.awaitOnline();
