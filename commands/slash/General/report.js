@@ -1,4 +1,4 @@
-const { EmbedBuilder } = require("discord.js");
+/* const { EmbedBuilder } = require("discord.js");
 const axios = require("axios");
 const list = require("../../../config/list");
 const Bot = require("../../../reportBot");
@@ -19,20 +19,12 @@ module.exports = {
             description: "The user you want to report",
             required: true
         },
-
-        /* {
-            name: "How many times",
-            type: 3,
-            description: "Test desc",
-            required: true
-        } */
     ],
     permissions: {
         DEFAULT_MEMBER_PERMISSIONS: "SendMessages"
     },
     run: async (client, interaction, config, db) => {
 
-        /* console.log(interaction) */
         if (interaction.guildId != config.Client.GUILD_ID) return interaction.reply({
             embeds: [
                 new EmbedBuilder()
@@ -44,19 +36,6 @@ module.exports = {
             ],
             ephemeral: true
         })
-
-        /* if (!interaction.member.getId.equals("1056513874859401267")) {
-            return interaction.reply({
-                embeds: [
-                    new EmbedBuilder()
-                        .setDescription("You don't have enough permissions to use this command! Please be soge.")
-                        .setColor('Red')
-                        .setTimestamp()
-                        .setFooter({ text: 'Literally robbed Omi\'s code', iconURL: 'https://i.imgur.com/R8lsYLv.png' })
-                ],
-                ephemeral: true
-            })
-        } */
 
         if (reportingInProgress) {
             return interaction.reply({
@@ -79,7 +58,7 @@ module.exports = {
             // Do something with it.
 
 
-            /* const proxiesRequest = await axios.get(this.apiurl + 'get-proxies'); */
+            //const proxiesRequest = await axios.get(this.apiurl + 'get-proxies'); 
             try {
                 //res = await axios.get(`http://omi.systems:5000/config/eecea3c7-c24f-4d6e-8bc7-17b5e8156cb8`);
             } catch (e) {
@@ -123,10 +102,10 @@ module.exports = {
                 //console.log(tokens.length + " , " + proxies.length)
                 for (let i = 0; i < tokens.length && i < proxyList.length; i++) {
                     const tmp = new Bot({
-                        proxyHost: proxyList[i].proxy_address,
-                        proxyPort: proxyList[i].port,
-                        proxyUser: proxyList[i].username,
-                        proxyPassword: proxyList[i].password,
+                        proxyHost: proxyList[i+1].proxy_address, //bcs 1sr proxy is used by autogrinder
+                        proxyPort: proxyList[i+1].port,
+                        proxyUser: proxyList[i].username, //Same for all anyways
+                        proxyPassword: proxyList[i].password, //Same for all anyways
                         uuid: tokens[i].id,
                         username: tokens[i].name,
                         //token: tokens[i].access_token,
@@ -199,3 +178,4 @@ module.exports = {
 
     },
 };
+ */

@@ -8,7 +8,7 @@ module.exports = {
     permissions: {
         DEFAULT_MEMBER_PERMISSIONS: "SendMessages"
     },
-    run: async (client, interaction, config, db, color = 'Red') => {
+    run: async (client, interaction, config, db) => {
         return interaction.reply({
             embeds: [
                 new EmbedBuilder()
