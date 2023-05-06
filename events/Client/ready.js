@@ -88,7 +88,7 @@ client.once('ready', async () => {
         }
 
         //Wait 16 mins for accurate results
-        sleep(1000 * 5).then(() => {
+        sleep(1000 * 60 * 16).then(() => {
           setInterval(() => {
           msg.then((message) => {
             getStaffXp(staffList).then((staffXP) => {
