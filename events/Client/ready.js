@@ -3,7 +3,7 @@ const client = require("../../index");
 const config = require('../../config/config.js');
 const colors = require("colors");
 const { token } = require("../../index");
-const { map } = require("mathjs");
+const { map, count } = require("mathjs");
 
 function getStaffXp(staffList) {
   let staffXP = new Map();
@@ -52,6 +52,10 @@ function clearChannel(channel) {
     .catch(console.error);
 }
 
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 module.exports = {
   name: "ready.js"
 };
@@ -63,48 +67,70 @@ client.once('ready', async () => {
     const channelId = '1068325027847622736';
     let channel = client.channels.cache.get(channelId);
     let staffList = ["Rhune", "Pensul", "Gerbor12", "MCVisuals", "lebrillant", "smoarzified", "Ladybleu", "Cheesey"];
+    let counters = new Map();
     let msg;
+    let onlineStaff = [];
+    let offlineStaff = [];
+
+    //Set all the counters to 0
+    for(let i = 0; i < staffList.length; i++) {
+      counters.set(staffList[i], 0);
+    }
 
     //Clear out all the past messages in the channel
     clearChannel(channel);
 
-    getStaffXp(staffList).then((initialXP) => {
+    getStaffXp(staffList).then((tempXP) => {
         if (channel) {
           msg = channel.send({embeds: [new EmbedBuilder().setColor("Orange").setTitle("Checker Started, waiting 16 minutes for accurate results").setDescription("Loading...")]});
         } else {
           console.error(`Unable to find channel with ID ${channelId}`);
         }
 
-        //Once every 16 mins for accurate results
+        //Wait 16 mins for accurate results
+        sleep(1000 * 5).then(() => {
           setInterval(() => {
           msg.then((message) => {
             getStaffXp(staffList).then((staffXP) => {
-              let onlineStaff = "";
-              let offlineStaff = "";
+              
 
+              //Compare guild xp of each staff to see if it has changed in the last minute
               staffXP.forEach((xp, staff) => {
-                if(xp > initialXP.get(staff)) {
-                  onlineStaff += staff + "\n";
+                if(xp > tempXP.get(staff)) {
+                  counters.set(staff, 0);
                 } else {
-                  offlineStaff += staff + "\n";
+                  counters.set(staff, counters.get(staff) + 1);
                 }
               });
 
-              initialXP = staffXP;
+              //If staff has been offline for longer than 16mins, add them to the offline list
+              counters.forEach((count, staff) => {
+                if(count >= 16 && offlineStaff.indexOf(staff) == -1) {
+                  offlineStaff.push(staff);
+                  onlineStaff.splice(onlineStaff.indexOf(staff), 1);
+                } else if(count < 16 && offlineStaff.indexOf(staff) != -1) {
+                  //If the counter is less than 16, meaning their xp updated in the last 16mins, add them to online list
+                  onlineStaff.push(staff);
+                  offlineStaff.splice(offlineStaff.indexOf(staff), 1);
+                }
+              });
+
+              tempXP = staffXP;
 
               message.edit({
               embeds: [new EmbedBuilder()
                       .setColor("Green")
                       .setTitle("Online staff")
-                      .setDescription(onlineStaff || "No staff online"),
+                      .setDescription(onlineStaff.toString() || "No staff online"),
                       new EmbedBuilder()
                       .setColor("Red")
                       .setTitle("Offline staff")
-                      .setDescription(offlineStaff || "No staff offline")
+                      .setDescription(offlineStaff.toString() || "No staff offline")
                     ]
                   });
                 });
               });
-            }, 1000 * 60 * 16);
+            }, 1000 * 60);
+        });          
     });
 })
