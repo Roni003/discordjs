@@ -13,9 +13,14 @@ function getStaffXp(staffList) {
       fetch(`https://api.slothpixel.me/api/guilds/${staff}`).then((res) => res.json()).then((json) => {
         json.members.forEach((member) => {
           if(member.uuid == uuid) {
-            let dailyXP = member.exp_history[Object.keys(member.exp_history)[0]];
-            //console.log(`${staff} (${uuid})'s XP: ${dailyXP}`);
-            staffXP.set(staff, dailyXP);
+            try {
+              let dailyXP = member.exp_history[Object.keys(member.exp_history)[0]];
+              //console.log(`${staff} (${uuid})'s XP: ${dailyXP}`);
+              staffXP.set(staff, dailyXP);
+            } catch (error) {
+              console.log(`[ERROR] ${staff}`);
+            }
+            
           } 
         })
       })
@@ -35,6 +40,18 @@ function getUUID(playername) {
     .then(player => player.id);
 }
 
+function clearChannel(channel) {
+  channel.messages.fetch()
+    .then(messages => {
+      messages.forEach(msg => {
+        msg.delete()
+          .then(deletedMessage => console.log(`Deleted message ${deletedMessage.id}`))
+          .catch(console.error);
+      });
+    })
+    .catch(console.error);
+}
+
 module.exports = {
   name: "ready.js"
 };
@@ -45,8 +62,11 @@ client.once('ready', async () => {
 
     const channelId = '1068325027847622736';
     let channel = client.channels.cache.get(channelId);
-    let staffList = ["Rhune", "Pensul", "Gerbor12", "MCVisuals", "lebrillant", "smoarzified", "Ladybleu", "Cheesey", "TacNayn", "Plancke"];
+    let staffList = ["Rhune", "Pensul", "Gerbor12", "MCVisuals", "lebrillant", "smoarzified", "Ladybleu", "Cheesey"];
     let msg;
+
+    //Clear out all the past messages in the channel
+    clearChannel(channel);
 
     getStaffXp(staffList).then((initialXP) => {
         if (channel) {
@@ -85,6 +105,6 @@ client.once('ready', async () => {
                   });
                 });
               });
-            }, 1000 * 5);
+            }, 1000 * 20);
     });
 })
