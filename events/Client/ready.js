@@ -72,9 +72,9 @@ client.once('ready', async () => {
     let onlineStaff = [];
     let offlineStaff = [];
 
-    //Set all the counters to 0
+    //Set all the counters to 16
     for(let i = 0; i < staffList.length; i++) {
-      counters.set(staffList[i], 0);
+      counters.set(staffList[i], 16);
     }
 
     //Clear out all the past messages in the channel
