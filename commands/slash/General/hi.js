@@ -13,7 +13,7 @@ module.exports = {
             embeds: [
                 new EmbedBuilder()
                     .setDescription(client.user.username + " says hi")
-                    .setColor(color)
+                    .setColor("Green")
                     //.setAuthor(client) //Sets the author of the embed as client.name
                     .setTitle("Greeting")
             ],
