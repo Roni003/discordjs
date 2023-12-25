@@ -1,4 +1,4 @@
-# Discord Bot
+# Discord Player Tracker Bot
 ## Technologies used:
 ### - Node.js
 ### - Discord.js
